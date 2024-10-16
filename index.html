@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boredom Buster</title>
+    <link rel="stylesheet" href="src/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Axios CDN -->
+</head>
+
+<body>
+    <div id="nav">
+        <h3>Boredom Buster</h3>
+    </div>
+    <div id="content">
+        <!-- Dropdown for selecting participants -->
+        <label for="participantsSelect">Select Participants:</label>
+        <select id="participantsSelect">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+        </select>
+
+        <div id="activities_Select"></div>
+
+        <!-- Bottom Sheet for displaying activity details -->
+        <div id="bottomSheet">
+            <h4 id="activityTitle"></h4>
+            <p id="activityDetails"></p>
+            <button id="cancelBtn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="src/index.js"></script>
+</body>
+
+</html>
