@@ -1,0 +1,181 @@
+
+  
+  {"activities":[
+    {
+      "type": "recreational",
+      "participants": 1,
+      "activity": "Go for a nature walk"
+    },
+    {
+      "type": "recreational",
+      "participants": 2,
+      "activity": "Play a game of badminton"
+    },
+    {
+      "type": "recreational",
+      "participants": 4,
+      "activity": "Have a board game night"
+    },
+    {
+      "type": "recreational",
+      "participants": 6,
+      "activity": "Play a soccer match at the park"
+    },
+    {
+      "type": "recreational",
+      "participants": 8,
+      "activity": "Host a karaoke party"
+    },
+    {
+      "type": "educational",
+      "participants": 1,
+      "activity": "Read a new book"
+    },
+    {
+      "type": "educational",
+      "participants": 2,
+      "activity": "Attend a webinar on a topic of interest"
+    },
+    {
+      "type": "educational",
+      "participants": 4,
+      "activity": "Work together on a science experiment"
+    },
+    {
+      "type": "educational",
+      "participants": 5,
+      "activity": "Organize a group study session"
+    },
+    {
+      "type": "educational",
+      "participants": 6,
+      "activity": "Go on a museum field trip"
+    },
+    {
+      "type": "social",
+      "participants": 1,
+      "activity": "Call a friend and catch up"
+    },
+    {
+      "type": "social",
+      "participants": 2,
+      "activity": "Have a coffee date"
+    },
+    {
+      "type": "social",
+      "participants": 4,
+      "activity": "Plan a double date"
+    },
+    {
+      "type": "social",
+      "participants": 5,
+      "activity": "Host a small dinner party"
+    },
+    {
+      "type": "social",
+      "participants": 8,
+      "activity": "Organize a picnic with friends"
+    },
+    {
+      "type": "charity",
+      "participants": 1,
+      "activity": "Donate clothes to a local shelter"
+    },
+    {
+      "type": "charity",
+      "participants": 2,
+      "activity": "Volunteer at a soup kitchen"
+    },
+    {
+      "type": "charity",
+      "participants": 4,
+      "activity": "Clean up a neighborhood park"
+    },
+    {
+      "type": "charity",
+      "participants": 5,
+      "activity": "Host a charity fundraiser"
+    },
+    {
+      "type": "charity",
+      "participants": 6,
+      "activity": "Organize a community drive"
+    },
+    {
+      "type": "cooking",
+      "participants": 1,
+      "activity": "Try a new recipe for dinner"
+    },
+    {
+      "type": "cooking",
+      "participants": 2,
+      "activity": "Bake cookies together"
+    },
+    {
+      "type": "cooking",
+      "participants": 4,
+      "activity": "Make homemade pizza as a group"
+    },
+    {
+      "type": "cooking",
+      "participants": 5,
+      "activity": "Have a cooking competition"
+    },
+    {
+      "type": "cooking",
+      "participants": 6,
+      "activity": "Prepare a feast for a family gathering"
+    },
+    {
+      "type": "relaxation",
+      "participants": 1,
+      "activity": "Meditate for 20 minutes"
+    },
+    {
+      "type": "relaxation",
+      "participants": 2,
+      "activity": "Do yoga together"
+    },
+    {
+      "type": "relaxation",
+      "participants": 4,
+      "activity": "Have a spa day with friends"
+    },
+    {
+      "type": "relaxation",
+      "participants": 5,
+      "activity": "Watch a movie marathon"
+    },
+    {
+      "type": "relaxation",
+      "participants": 6,
+      "activity": "Do a group meditation"
+    },
+    {
+      "type": "busywork",
+      "participants": 1,
+      "activity": "Organize your closet"
+    },
+    {
+      "type": "busywork",
+      "participants": 2,
+      "activity": "Tackle a home improvement project"
+    },
+    {
+      "type": "busywork",
+      "participants": 4,
+      "activity": "Clean the house together"
+    },
+    {
+      "type": "busywork",
+      "participants": 5,
+      "activity": "Declutter the garage"
+    },
+    {
+      "type": "busywork",
+      "participants": 6,
+      "activity": "Paint a room together"
+    }
+  ]
+
+  }

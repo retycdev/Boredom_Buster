@@ -1,70 +1,146 @@
-// Activities to select from
-const activities = [
-  { type: "education" },
-  { type: "recreational" },
-  { type: "social" },
-  { type: "charity" },
-  { type: "cooking" },
-  { type: "relaxation" },
-  { type: "busywork" },
-];
+document.addEventListener("DOMContentLoaded", () => {
+  let selectedParticipants = null;
+  let selectedActivity = null;
 
-// Base URL for the Bored API
-const baseURL = "https://bored-api.appbrewery.com/filter?type=";
+  // Get participant elements
+  const participantDivs = document.querySelectorAll("#participant_select div");
+  participantDivs.forEach((div) => {
+    div.addEventListener("click", () => {
+      // Remove "clicked" class from all participants
+      participantDivs.forEach((d) => d.classList.remove("clicked"));
 
-// Elements for dynamic content
-const activitiesSelect = document.getElementById("activities_Select");
-const bottomSheet = document.getElementById("bottomSheet");
-const activityTitle = document.getElementById("activityTitle");
-const activityDetails = document.getElementById("activityDetails");
-const cancelBtn = document.getElementById("cancelBtn");
-const participantsSelect = document.getElementById("participantsSelect");
+      // Add "clicked" class to the selected participant
+      div.classList.add("clicked");
+      selectedParticipants = parseInt(div.textContent.trim());
+      console.log("Selected participants:", selectedParticipants);
 
-// Function to create activity divs and add click listeners
-function createActivityDivs() {
+      // If both participants and activity are selected, fetch data
+      if (selectedParticipants && selectedActivity) {
+        fetchActivities(selectedActivity, selectedParticipants);
+      }
+    });
+  });
+
+  // Get activity elements
+  const activities = [
+    "Educational",
+    "Recreational",
+    "Charity",
+    "Cooking",
+    "Social",
+    "Busywork",
+    "Relaxation",
+  ];
+  const activitiesSelect = document.getElementById("activities_Select");
+
   activities.forEach((activity) => {
-    let div = document.createElement("div");
-    div.classList.add("activity"); // Add class for styling
-    div.textContent = activity.type;
+    const div = document.createElement("div");
+    const p = document.createElement("p");
+    p.innerHTML = activity;
+    div.appendChild(p);
 
-    // Add click event to fetch data and open the bottom sheet
-    div.addEventListener("click", () => fetchActivityData(activity.type));
+    div.addEventListener("click", () => {
+      // Remove "clicked" class from all activities
+      activitiesSelect
+        .querySelectorAll("div")
+        .forEach((d) => d.classList.remove("clicked"));
 
-    // Append the div to the activities_Select section
+      // Add "clicked" class to the selected activity
+      div.classList.add("clicked");
+      selectedActivity = activity;
+      console.log("Selected activity:", selectedActivity);
+
+      // If both participants and activity are selected, fetch data
+      if (selectedParticipants && selectedActivity) {
+        fetchActivities(selectedActivity, selectedParticipants);
+      }
+    });
+
     activitiesSelect.appendChild(div);
   });
-}
 
-// Fetch activity data and display it in the bottom sheet
-function fetchActivityData(activityType) {
-  const participantCount = participantsSelect.value; // Get selected participant count
-  const url = `${baseURL}${activityType}&participants=${participantCount}`; // Include participants in URL
+  // Function to fetch activities based on type and participants
+  function fetchActivities(activityType, participants) {
+    axios
+      .get("http://localhost:3000/activities")
+      .then((response) => {
+        const { data } = response;
 
-  axios
-    .get(url)
-    .then((response) => {
-      // Update bottom sheet with the fetched data
-      const activity = response.data[0]; // Assuming the first activity in the list
-      activityTitle.textContent = `${
-        activityType.charAt(0).toUpperCase() + activityType.slice(1)
-      } Activity`;
-      activityDetails.textContent = `Participants: ${activity.participants}, Price: ${activity.price}`;
+        // Filter data based on selected activity type and number of participants
+        const filteredActivities = data.filter(
+          (item) =>
+            item.type.toLowerCase() === activityType.toLowerCase() &&
+            item.participants === participants
+        );
 
-      // Show the bottom sheet
-      bottomSheet.classList.add("active");
-    })
-    .catch((error) => {
-      console.error(`Error fetching data for ${activityType}:`, error);
-      activityTitle.textContent = `Error fetching ${activityType}`;
-      activityDetails.textContent = "Please try again later.";
-      bottomSheet.classList.add("active");
-    });
-}
+        // Display filtered activities
+        console.log(
+          `Filtered activities for ${activityType} with ${participants} participants:`,
+          filteredActivities
+        );
 
-// Function to hide the bottom sheet
-cancelBtn.addEventListener("click", () => {
-  bottomSheet.classList.remove("active");
+        if (filteredActivities.length > 0) {
+          const randomActivity =
+            filteredActivities[
+              Math.floor(Math.random() * filteredActivities.length)
+            ].activity;
+
+          // Show dialogBox and scrim
+          const dialogBox = document.getElementById("dialogBox");
+          const scrim = document.getElementById("scrim");
+          const displayActivity = document.getElementById("displayActivity");
+
+          // Clear any existing activity cards
+          displayActivity.innerHTML = "";
+
+          // Create a new div for the activity
+          const activityCard = document.createElement("div");
+          activityCard.className = "activityCard";
+          activityCard.innerHTML = randomActivity; // Set the activity text
+
+          // Append the activity card to the displayActivity section
+          displayActivity.appendChild(activityCard);
+
+          // Add the "show" class to dialogBox and scrim
+          dialogBox.classList.add("show");
+          scrim.classList.add("show");
+
+          // Disable body scroll
+          document.body.style.overflow = "hidden";
+
+          // Scroll to displayActivity
+          displayActivity.scrollIntoView({ behavior: "smooth" });
+        } else {
+          alert(
+            `No activities found for ${activityType} with ${participants} participants.`
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching activities:", err);
+        alert("There was an error in getting activities.");
+      });
+  }
+
+  // Cancel button functionality
+  const cancelButton = document.getElementById("cancel");
+  cancelButton.addEventListener("click", () => {
+    // Remove the "show" class from dialogBox and scrim
+    const dialogBox = document.getElementById("dialogBox");
+    const scrim = document.getElementById("scrim");
+
+    dialogBox.classList.remove("show");
+    scrim.classList.remove("show");
+
+    // Enable body scroll
+    document.body.style.overflow = "auto";
+
+    // Reset selected values for new selection
+    selectedParticipants = null;
+    selectedActivity = null;
+    participantDivs.forEach((div) => div.classList.remove("clicked"));
+    activitiesSelect
+      .querySelectorAll("div")
+      .forEach((div) => div.classList.remove("clicked"));
+  });
 });
-
-// Initialize the activity divs on page load
-createActivityDivs();

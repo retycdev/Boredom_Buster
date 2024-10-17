@@ -14,25 +14,47 @@
         <h3>Boredom Buster</h3>
     </div>
     <div id="content">
-        <!-- Dropdown for selecting participants -->
-        <label for="participantsSelect">Select Participants:</label>
-        <select id="participantsSelect">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="8">8</option>
-        </select>
-
-        <div id="activities_Select"></div>
-
-        <!-- Bottom Sheet for displaying activity details -->
-        <div id="bottomSheet">
-            <h4 id="activityTitle"></h4>
-            <p id="activityDetails"></p>
-            <button id="cancelBtn">Cancel</button>
+        <div id="hero">
+            <h2>Bored? Don't Worry. Let's Have Some Fun Activity. Shall We...</h2>
         </div>
+        <div class="sub_secTitle">
+            <h3>How Many Participants Would You Wish for The Activity?</h3>
+        </div>
+        <div id="participant_select">
+            <div>
+                <h3>1</h3>
+            </div>
+            <div>
+                <h3>2</h3>
+            </div>
+            <div>
+                <h3>4</h3>
+            </div>
+            <div>
+                <h3>5</h3>
+            </div>
+            <div>
+                <h3>6</h3>
+            </div>
+            <div>
+                <h3>8</h3>
+            </div>
+        </div>
+        <div class="sub_secTitle">
+            <h3>What Activity Would You Like?</h3>
+        </div>
+        <div id="activities_Select">
+            <!--Displays activities to select from-->
+        </div>
+        <div id="scrim"></div>
+        <div id="dialogBox">
+            <div class="actions" id="cancel"> <button>OK</button></div>
+            <div id="displayActivity">
+
+            </div>
+
+        </div>
+
     </div>
 
     <script src="src/index.js"></script>
