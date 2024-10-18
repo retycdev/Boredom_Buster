@@ -66,8 +66,11 @@ document.addEventListener("DOMContentLoaded", () => {
       .then((response) => {
         const { data } = response;
 
-        // Filter data based on selected activity type and number of participants
-        const filteredActivities = data.filter(
+        // Access the 'activities' array from the response data
+        const activitiesArray = data.activities;
+
+        // Filter the activities based on the selected type and participants
+        const filteredActivities = activitiesArray.filter(
           (item) =>
             item.type.toLowerCase() === activityType.toLowerCase() &&
             item.participants === participants
@@ -80,36 +83,31 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (filteredActivities.length > 0) {
-          const randomActivity =
+          const activity =
             filteredActivities[
               Math.floor(Math.random() * filteredActivities.length)
             ].activity;
 
-          // Show dialogBox and scrim
-          const dialogBox = document.getElementById("dialogBox");
-          const scrim = document.getElementById("scrim");
+          // Show the dialog box with the activity
+          document.getElementById("dialogBox").classList.add("show");
+          document.getElementById("scrim").classList.add("show");
+
+          // Create a new div for the activity and append it to #displayActivity
           const displayActivity = document.getElementById("displayActivity");
-
-          // Clear any existing activity cards
-          displayActivity.innerHTML = "";
-
-          // Create a new div for the activity
+          displayActivity.innerHTML = ""; // Clear previous content
           const activityCard = document.createElement("div");
-          activityCard.className = "activityCard";
-          activityCard.innerHTML = randomActivity; // Set the activity text
-
-          // Append the activity card to the displayActivity section
+          activityCard.classList.add("activityCard");
+          activityCard.textContent = activity; // Set the activity text
           displayActivity.appendChild(activityCard);
 
-          // Add the "show" class to dialogBox and scrim
-          dialogBox.classList.add("show");
-          scrim.classList.add("show");
-
-          // Disable body scroll
-          document.body.style.overflow = "hidden";
-
-          // Scroll to displayActivity
+          // Scroll to #displayActivity smoothly
           displayActivity.scrollIntoView({ behavior: "smooth" });
+
+          // Deselect participants and activities
+          participantDivs.forEach((d) => d.classList.remove("clicked"));
+          activitiesSelect
+            .querySelectorAll("div")
+            .forEach((d) => d.classList.remove("clicked"));
         } else {
           alert(
             `No activities found for ${activityType} with ${participants} participants.`
