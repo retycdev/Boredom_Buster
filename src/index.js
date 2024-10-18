@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Function to fetch activities based on type and participants
   function fetchActivities(activityType, participants) {
     axios
-      .get("https://api.jsonbin.io/v3/qs/6710ade1e41b4d34e4442c3d/activities")
+      .get("https://retycdev.github.io/bordom_buster-API/db.json")
       .then((response) => {
         const { data } = response;
 
