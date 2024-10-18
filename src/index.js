@@ -60,64 +60,70 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Function to fetch activities based on type and participants
-  function fetchActivities(activityType, participants) {
-    axios
-      .get("https://retycdev.github.io/bordom_buster-API/db.json")
-      .then((response) => {
-        const { data } = response;
+  async function fetchActivities(activityType, participants) {
+    try {
+      // Fetch the data asynchronously
+      const response = await axios.get(
+        "https://retycdev.github.io/bordom_buster-API/db.json"
+      );
 
-        // Access the 'activities' array from the response data
-        const activitiesArray = data.activities;
+      console.log("Full response: ", response); // For debugging
 
-        // Filter the activities based on the selected type and participants
-        const filteredActivities = activitiesArray.filter(
-          (item) =>
-            item.type.toLowerCase() === activityType.toLowerCase() &&
-            item.participants === participants
+      // Ensure you are accessing the 'activities' array correctly
+      const activitiesArray = response.data.activities;
+
+      if (!activitiesArray || activitiesArray.length === 0) {
+        throw new Error("No activities found in the response.");
+      }
+
+      // Filter the activities based on the selected type and participants
+      const filteredActivities = activitiesArray.filter(
+        (item) =>
+          item.type.toLowerCase() === activityType.toLowerCase() &&
+          item.participants === participants
+      );
+
+      // Log the filtered activities
+      console.log(
+        `Filtered activities for ${activityType} with ${participants} participants:`,
+        filteredActivities
+      );
+
+      if (filteredActivities.length > 0) {
+        const activity =
+          filteredActivities[
+            Math.floor(Math.random() * filteredActivities.length)
+          ].activity;
+
+        // Show the dialog box with the activity
+        document.getElementById("dialogBox").classList.add("show");
+        document.getElementById("scrim").classList.add("show");
+
+        // Create a new div for the activity and append it to #displayActivity
+        const displayActivity = document.getElementById("displayActivity");
+        displayActivity.innerHTML = ""; // Clear previous content
+        const activityCard = document.createElement("div");
+        activityCard.classList.add("activityCard");
+        activityCard.textContent = activity; // Set the activity text
+        displayActivity.appendChild(activityCard);
+
+        // Scroll to #displayActivity smoothly
+        displayActivity.scrollIntoView({ behavior: "smooth" });
+
+        // Deselect participants and activities
+        participantDivs.forEach((d) => d.classList.remove("clicked"));
+        activitiesSelect
+          .querySelectorAll("div")
+          .forEach((d) => d.classList.remove("clicked"));
+      } else {
+        alert(
+          `No activities found for ${activityType} with ${participants} participants.`
         );
-
-        // Display filtered activities
-        console.log(
-          `Filtered activities for ${activityType} with ${participants} participants:`,
-          filteredActivities
-        );
-
-        if (filteredActivities.length > 0) {
-          const activity =
-            filteredActivities[
-              Math.floor(Math.random() * filteredActivities.length)
-            ].activity;
-
-          // Show the dialog box with the activity
-          document.getElementById("dialogBox").classList.add("show");
-          document.getElementById("scrim").classList.add("show");
-
-          // Create a new div for the activity and append it to #displayActivity
-          const displayActivity = document.getElementById("displayActivity");
-          displayActivity.innerHTML = ""; // Clear previous content
-          const activityCard = document.createElement("div");
-          activityCard.classList.add("activityCard");
-          activityCard.textContent = activity; // Set the activity text
-          displayActivity.appendChild(activityCard);
-
-          // Scroll to #displayActivity smoothly
-          displayActivity.scrollIntoView({ behavior: "smooth" });
-
-          // Deselect participants and activities
-          participantDivs.forEach((d) => d.classList.remove("clicked"));
-          activitiesSelect
-            .querySelectorAll("div")
-            .forEach((d) => d.classList.remove("clicked"));
-        } else {
-          alert(
-            `No activities found for ${activityType} with ${participants} participants.`
-          );
-        }
-      })
-      .catch((err) => {
-        console.error("Error fetching activities:", err);
-        alert("There was an error in getting activities.");
-      });
+      }
+    } catch (err) {
+      console.error("Error fetching activities:", err.message); // Improved error logging
+      alert("There was an error in getting activities.");
+    }
   }
 
   // Cancel button functionality
